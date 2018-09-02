@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{$data['title']}</title>
+    <link rel="stylesheet" href="https://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css" />
+    <link href="https://cdn.bootcss.com/video.js/5.19.0/alt/video-js-cdn.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/video.js/5.19.0/alt/video.novtt.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.js"></script>
+    <script type="text/javascript">
+        ! function () {
+            function e(e) {
+                return this.config = e, this
+            }
+            e.prototype = {
+                reset: function () {
+                    var e = Math.min(document.documentElement.clientWidth, 750) / 750 * 100;
+                    document.documentElement.style.fontSize = e + "px";
+                    var t = parseFloat(window.getComputedStyle(document.documentElement).fontSize),
+                        n = e / t;
+                    1 != n && (document.documentElement.style.fontSize = e * n + "px")
+                }
+            }, window.Adapter = new e, window.Adapter.reset(), window.onload = function () {
+                window.Adapter.reset()
+            }, window.onresize = function () {
+                window.Adapter.reset()
+            }
+        }();
+    </script>
+</head>
+<style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+    }
+
+    #fullPlayer{
+        width:100vw;
+    }
+    .video_page {
+        height: 100%;
+        width: 100%;
+
+        position: relative;
+    }
+
+    .fullPlayer-dimensions {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .video-js .vjs-big-play-button {
+        width: 2.2em;
+        height: 2.2em;
+        line-height: 2.2em;
+        left: 50%;
+        bottom: 50%;
+        margin-left: -1.1em;
+        margin-top: -1.1em;
+        background-color: rgba(0, 0, 0, 0.5);
+        border: 0;
+        font-size: 2em;
+    }
+
+    video {
+        position: relative;
+    }
+
+    .video_act {
+        position: absolute;
+        left: 0.24rem;
+        bottom: 80px;
+        z-index: 999;
+    }
+
+    .userInfo {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-content: center;
+        height: 0.72rem;
+        line-height: 0.72rem;
+    }
+
+    .userInfo span {
+        color: #fff;
+    }
+
+    .userInfo img {
+        width: 0.72rem;
+        height: 0.72rem;
+        border-radius: 0.36rem;
+        margin-right: 0.12rem;
+    }
+
+    .commontTip {
+        line-height: 1rem;
+        height: 1rem;
+        font-size: 0.28rem;
+        color: #fff;
+    }
+
+    .talkBar {
+        height: 0.64rem;
+        line-height: 0.64rem;
+
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        width: calc(100vw - 0.48rem);
+    }
+
+    .share {
+        width: 3.6rem;
+        height: 0.64rem;
+        line-height: 0.64rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        /* padding-left: 12px */
+    }
+
+    .share img {
+        width: 0.52rem;
+        height: 0.52rem;
+    }
+
+    .input {
+        position: relative;
+        width: calc(100vw - 4.08rem);
+        height: 0.64rem;
+        line-height: 0.64rem;
+    }
+
+    .input input {
+        height: 0.64rem;
+        line-height: 0.64rem;
+        outline: none;
+        border-radius: 0.32rem;
+        width: calc(100vw - 4.76rem);
+        border: none;
+        padding-left: 0.68rem;
+        background: rgba(255, 255, 255, 0.4)
+    }
+
+    .input img {
+        position: absolute;
+        left: 0.2rem;
+        width: 0.44rem;
+        height: 0.44rem;
+        top: 0.1rem;
+    }
+
+    input::-webkit-input-placeholder {
+        color: #fff !important;
+    }
+
+    .IIV::-webkit-media-controls-play-button,
+    .IIV::-webkit-media-controls-start-playback-button {
+        opacity: 0;
+        pointer-events: none;
+        width: 0.1rem;
+    }
+
+    .btn {
+        width: 1rem;
+        height: 1rem;
+        position: absolute;
+        left: 50%;
+        z-index: 9999;
+        top: 50%;
+        margin-left: -0.5rem;
+        margin-top: -0.5rem;
+    }
+
+    .hidePlay {
+        display: none;
+    }
+    .banner-top {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        z-index: 100;
+        width: 100%;
+        height: 1.4rem;
+        background-color: #0e0b17;
+        background-image: none;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+    }
+    .banner-top.transparent {
+        background-color: rgba(14,11,23,.6);
+        color: black;
+    }
+    .banner-top .user-wrap {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        height: 100%;
+        -webkit-align-items: center;
+        padding-left: 0.2rem;
+    }
+
+    .banner-top .user-wrap .avator {
+        width: 1rem;
+        height: 1rem;
+        -webkit-background-size: contain;
+        -webkit-border-radius: 100%;
+    }
+    .banner-top .info-wrap {
+        /* margin-left: 0.2rem; */
+        color: #fff;
+    }
+    .banner-top .info-wrap .name-wrap {
+        font-size: 0.28rem;
+        line-height: 0.4rem;
+        width: 2.4rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #face15;
+    }
+    .banner-top .info-wrap .txt-wrap {
+        font-size:0.28rem;
+        line-height: 0.4rem;
+        margin-top: 0.2rem;
+    }
+    .banner-btn {
+        width: 2.4rem;
+        height: 0.6rem;
+        line-height: 0.6rem;
+        border-radius: 0.12rem;
+        background: -webkit-linear-gradient(top,#fe2e57,#f41d6a);
+        font-size: 0.3rem;
+        color: #fff;
+        margin-right: 0.2rem;
+        text-align: center;
+    }
+
+
+
+    .inputBg{
+        position: absolute;
+        width:100vw;
+        height: calc(100vh - 2.62rem);
+        top: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 99999;
+    }
+    .alertInput{
+        background: #efefef;
+        z-index: 99999;
+        padding: 0.24rem;
+        position: absolute;
+        bottom: 0;
+        width:100vw;
+        box-sizing:border-box;
+    }
+    .alertInput textarea{
+        background: #fff;
+        width: 100%;
+        height:1.4rem;
+        padding: 0.1rem;
+        box-sizing: border-box;
+        border: none;
+    }
+
+
+    .alertInput button{
+        background: red;
+        padding: 0;
+        margin: 0;
+        line-height: 0.5rem;
+        width: 1.2rem;
+        height: 0.5rem;
+        font-size: 0.28rem;
+        color: #fff;
+        float: right;
+        margin-top: 0.24rem;
+    }
+
+    .talk_alert{
+        height: 80vh;
+        background: #fff;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        z-index: 9999;
+        overflow-y: scroll;
+    }
+
+    .nomore{
+        height:0.8rem;
+        color:#a5a5a5;
+        line-height:0.8rem;
+        text-align: center;
+        font-size: 0.28rem;
+        background: #fff;
+        clear: both;
+        overflow: hidden;
+    }
+
+    .clickmore{
+        height:0.8rem;color:#5a5a5a;line-height:0.8rem;
+        text-align: center;
+        font-size: 0.28rem;
+        background: #fff;
+        clear: both;
+        overflow: hidden;
+    }
+
+    .total{
+        width: 3rem;
+        font-size: 0.3rem;
+        color: #5a5a5a;
+    }
+
+
+    .comment_top{
+        height:1rem;
+        line-height:1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #d8d8d8;
+        padding: 0 0.28rem;
+        background: #fff;
+    }
+    .comment_top img{
+        height:0.36rem;
+        width:0.36rem;
+    }
+
+    .box_item {
+        padding-bottom: 0.28rem;
+        background: #fff;
+        padding: 0 0.28rem;
+        clear:both;
+    }
+
+    .box_item_cont {
+        padding-left: 0.82rem;
+        width:90%;
+    }
+
+    .box_item_cont .cont {
+        line-height: 0.48rem;
+        font-size: 0.28rem;
+        color: #5a5a5a;
+        width: 100%;
+        /* background: pink;  */
+        white-space: normal;
+    }
+
+    .cont_time {
+        font-size: 0.24rem;
+        color: #a5a5a5;
+        height:0.5rem;
+        line-height:0.5rem;
+        float:left;
+        margin-right: 0.16rem;
+        z-index: 99999999
+    }
+    .cont_reply{
+        float:left;
+        font-size: 0.26rem;
+        color: #5a5a5a;
+        height:0.5rem;
+        line-height:0.5rem;
+        width: 0.84rem;
+        border-radius: 0.25rem;
+        background: #efefef;
+        text-align: center
+    }
+    .user_info {
+        height: 0.6rem;
+        line-height: 0.6rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 0.2rem 0;
+        margin-bottom: 0.1rem;
+    }
+
+    .user_info .avatar {
+        height: 0.6rem!important;
+        width: 0.6rem;
+        line-height: 0.6rem!important;
+        border-radius: 0.3rem;
+        margin-right: 0.12rem;
+    }
+
+    .user_info .user_infoP {
+        color: #363e9b;
+        font-size: 0.24rem;
+    }
+
+    .comment_bd{
+
+        background: #fff;
+    }
+
+    .hide{
+        display: none;
+    }
+
+
+
+</style>
+
+<body>
+<div class="video_page">
+    <video id="fullPlayer" poster="{$data['cover']}" style="height:100vh;" controlslist="nodownload" playsinline x5-video-player-type="h5" class="video-js vjs-big-play-centered"
+           preload="auto" controls data-setup='{"controls": false, "autoplay": false, "preload": "auto"}'>
+        <source src="{$data['video']}" type="video/mp4"></source>
+
+    </video>
+
+    <img src="/assets/api/images/play.png" class="btn">
+    <div class="video_act">
+        <p class="userInfo">
+            <img src="/assets/api/images/300.jpg">
+            <span>ladder</span>
+        </p>
+        <p class="commontTip">发布一个帖子</p>
+        <div class="talkBar">
+            <div class="input">
+                <input type="text" placeholder="我说几句" name="inputframe" value="">
+                <img src="/assets/api/images/write.png">
+            </div>
+            <div class="share">
+                <img src="/assets/api/images/comment.png" class="comment">
+                <img src="/assets/api/images/zan.png" class="zan">
+                <img src="/assets/api/images/share.png" class="share">
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 弹出输入框 BG -->
+    <div class='inputBg'></div>
+    <div class='alertInput'>
+        <div style='background:#fff'>
+            <textarea placeholder='请写下你的评论' id="commentBd" value='' bindinput='inpuComment'></textarea>
+        </div>
+        <button type='primary' id='sendComment'>发送</button>
+        <button class='hideInput' type='warning' style="margin-right:0.3rem;background:#d8d8d8;color:#5a5a5a;">取消</button>
+    </div>
+    <!-- 弹出输入框 END -->
+
+
+
+
+    <!-- 弹出评论BG -->
+    <div class='talk_alert'>
+        <div class='comment_top'>
+            <div class='total' style='width:300rpx'>{$data['pcounts']}条评论</div>
+            <img class='close' src='/assets/api/images/close.png'/>
+        </div>
+
+
+        <div class='comment_bd'>
+            {volist name="comment" id="vo"}
+            <div class="box_item">
+                <div class="user_info">
+                    <img class='avatar' src="{$vo['user']['avatar']}"/>
+                    <div class="user_infoP">{$vo['user']['username']|default="匿名网友"}</div>
+                </div>
+                <div class="box_item_cont">
+                    <div class="cont">{$vo['content']}</div>
+                    <div class="cont_time">{$vo['ctime']}</div>
+                    <div class="cont_reply reply">回复</div>
+                </div>
+            </div>
+            {/volist}
+
+
+            <!--<div class='nomore'>(⑉꒦ິ^꒦ິ⑉)暂无更多评论</div>-->
+            <!--<div class='clickmore' wx:if="{{talkList.length>1&&l!=''}}" bindtap="clickmore">点击加载更多</div> -->
+
+
+        </div>
+    </div>
+
+
+
+
+    <div id="bannerTop" class="banner-top transparent">
+        <div class="user-wrap">
+            <!-- <div class="avator" style="background-image:url(https://p3.pstatp.com/aweme/100x100/85e70016eeae5ad65d52.jpeg)"></div> -->
+            <div class="info-wrap">
+                <div class="name-wrap"> 远航音乐</div>
+                <div class="txt-wrap">邀您一起，玩转音乐的乐趣</div>
+            </div>
+        </div>
+        <div class="banner-btn">打开看看</div>
+    </div>
+</div>
+
+<script src="/assets/api/js/iphone-inline-video.min.js"></script>
+<script>
+    //初始化 隐藏弹出部分
+    $('.inputBg').hide();
+    $('.alertInput').hide();
+    $('.talk_alert').hide();
+
+
+    //点击input框弹出  显示输入框 及背景
+    $('.input').click(function(e){
+        e.stopPropagation();
+        $('.inputBg').show();
+        $('.alertInput').show();
+    });
+
+    $('.inputBg').click(function(){
+        $(this).hide();
+        $('.alertInput').hide();
+    });
+
+    // 首页评论弹出输入框 与评论回复弹出框共用
+    $('#commentBd').val();//输入框值
+
+    //取消评论 隐藏评论框及背景
+    $('.hideInput').click(function(){
+        $('.inputBg').hide();
+        $('.alertInput').hide();
+
+    });
+
+    $('#sendComment').click(function(){
+        //发送评论
+        //根据点击的哪个回复判断  从而调不同回复接口
+    });
+
+    //  <!-- 弹出评论结束 -->
+    //点击弹出评论列表
+    $('.comment').click(function(e){
+        e.stopPropagation();
+        e.cancelBubble = true;
+        $('.talk_alert').show();
+    })
+
+    //关闭显示弹出评论列表
+    $('.close').click(function(){
+        $('.talk_alert').hide();
+    })
+
+    //点击评论回复 弹出输入框及背景
+    $('.reply').click(function(){
+        $('.inputBg').show();
+        $('.alertInput').show();
+    });
+
+    //点赞
+    $('.zan').click(function(e){
+        e.stopPropagation();
+        //
+
+
+    });
+
+
+    //分享
+    $('.share').click(function(){
+
+    });
+
+
+
+
+
+</script>
+<script>
+    var options = {};
+    var start = false;
+
+
+    var player = videojs('fullPlayer', options, function onPlayerReady() {
+        videojs.log('Your player is ready!');
+        this.pause();
+
+        this.on('play', function (e) {
+            console.log('开始/恢复播放');
+            start = true;
+            e.stopPropagation();
+        });
+
+        this.on('pause', function (e) {
+            console.log('暂停播放');
+            start = false;
+            e.stopPropagation();
+        });
+
+        this.on('ended', function () {
+
+            console.log('结束播放');
+            //结束后重新点击播放
+            $('.btn').toggleClass("hidePlay");
+        });
+
+        var that = this;
+
+        //点击视口 播放和暂停
+        $('body').on('touchend', '#fullPlayer', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.cancelBubble = true;
+
+
+            $('.btn').toggleClass("hidePlay");
+            if (start == true) {
+                that.pause();
+            } else {
+                that.play();
+            }
+        })
+
+    });
+
+    //ios全屏bug设置
+    var video = $('#fullPlayer').get(0);
+    enableInlineVideo(video);
+
+    var bfscrolltop = document.body.scrollTop; //获取软键盘唤起前浏览器滚动部分的高度
+    $("input.inputframe").focus(function () { //在这里‘input.inputframe’是我的底部输入栏的输入框，当它获取焦点时触发事件
+        interval = setInterval(function () { //设置一个计时器，时间设置与软键盘弹出所需时间相近
+            document.body.scrollTop = document.body.scrollHeight; //获取焦点后将浏览器内所有内容高度赋给浏览器滚动部分高度
+        }, 100)
+    }).blur(function () { //设定输入框失去焦点时的事件
+        clearInterval(interval); //清除计时器
+        document.body.scrollTop = bfscrolltop;
+    });
+
+
+
+
+</script>
+</body>
+
+</html>

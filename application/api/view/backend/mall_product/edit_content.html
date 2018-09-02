@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情编辑</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <!-- 引入jQuery -->
+    <script src="/assets/libs/eleditor/jquery.min.js"></script>
+
+    <script src="/assets/libs/eleditor/webuploader.min.js"></script>
+    <!-- 插件核心 -->
+    <script src="/assets/libs/eleditor/Eleditor.min.js"></script>
+</head>
+<body>
+<div id="contentEditor">
+
+    <h1 style="text-align: left;">请点击输入文字</h1>
+
+</div>
+<script>
+    var contentEditor = new Eleditor({
+        el: '#contentEditor',
+        /*upload是上传配置对象*/
+        upload:{
+            server: '/api/common/tmp_upload',//后台接收地址
+            fileSizeLimit: 10,//限制文件上传大小为2M
+            formName: 'file',//设置文件name,
+            accept: {
+                //accept一般不用设置
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png,webp',
+                mimeTypes: 'image/gif,image/jpg,image/jpeg,image/bmp,image/png,image/webp'
+            }
+        },
+        /*初始化完成钩子*/
+        mounted: function(){
+
+            /*以下是扩展插入视频的演示*/
+            var _videoUploader = WebUploader.create({
+                auto: true,
+                server: '/api/common/tmp_upload',
+                /*按钮类就是[Eleditor-你的自定义按钮id]*/
+                pick: $('.Eleditor-insertVideo'),
+                duplicate: true,
+                resize: false,
+                accept: {
+                    title: 'Images',
+                    extensions: 'mp4',
+                    mimeTypes: 'video/mp4'
+                },
+                fileVal: 'video',
+            });
+            _videoUploader.on( 'uploadSuccess', function( _file, _call ) {
+
+                if( _call.status == 0 ){
+                    return window.alert(_call.msg);
+                }
+
+                /*保存状态，以便撤销*/
+                contentEditor.saveState();
+                contentEditor.getEditNode().after(`
+									<div class='Eleditor-video-area'>
+										<video src="${_call.url}" controls="controls"></video>
+									</div>
+								`);
+                contentEditor.hideEditorControllerLayer();
+            });
+        },
+        /*自定义按钮的例子*/
+        toolbars: [
+            'insertText',
+            'editText',
+            'insertImage',
+            'insertLink',
+            'insertHr',
+            'delete',
+            //自定义一个视频按钮
+            {
+                id: 'insertVideo',
+                // tag: 'p,img', //指定P标签操作，可不填
+                name: '插入视频',
+                handle: function(select, controll){
+                    //回调返回选择的dom对象和控制按钮对象
+
+                    /*因为上传要提前绑定按钮到webuploader，所以这里不做上传逻辑，写在mounted*/
+
+                    /*!!!!!!返回false编辑面板不会关掉*/
+                    return false;
+                }
+            },
+            'undo',
+            'cancel'
+        ]
+        //placeHolder: 'placeHolder设置占位符'
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?php
+
+return [
+    'Id'  =>  '序号',
+    'Cid'  =>  '分类',
+    'Title'  =>  '商品名称',
+    'Summary'  =>  '商品简介',
+    'Logo'  =>  '商品封面',
+    'Pics'  =>  '图片',
+    'Content'  =>  '内容',
+    'Post_fee'  =>  '运费',
+    'Attr_id'  =>  '属性',
+    'Extra_attr'  =>  '额外属性',
+    'Address'  =>  '地址',
+    'Price'  =>  '价格（单位：元）',
+    'Origin_price'  =>  '原始价格',
+    'Store'  =>  '库存数',
+    'Sale_num'  =>  '销售数',
+    'Limit'  =>  '最多购买数',
+    'Transfer'  =>  '配送范围',
+    'Sale_total'  =>  '销售总数',
+    'Begin_time'  =>  '开始时间',
+    'End_time'  =>  '结束时间',
+    'Is_recommend'  =>  '是否推荐',
+    'Status'  =>  '商品状态',
+    'Sort'  =>  '排序',
+    'Remark'  =>  '备注',
+    'Kefu'  =>  '客服电话',
+    'Ctime'  =>  '创建时间',
+    'Utime'  =>  '更新时间',
+    'Attr'   =>  '规格'
+];

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+</head>
+<body>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    var base_url='http://music.588net.com';
+    $(function () {
+        $.ajax({
+            url:base_url+'/api/user/mobilelogin',
+            data:{mobile:'15107141306','captcha':'12312'},
+            type:'post',
+            dataType:'json',
+            success:function (e) {
+                console.log(e);
+                var token=e.data['userinfo']['token'];
+                var header={};
+                header.token=token;
+                console.log(header);
+                $.ajax({
+                    url:base_url+'/api/user/getUserInfo',
+                    method:'post',
+                    dataType:'json',
+                    withCredentials: true,
+                    headers:header,
+                    success:function (m) {
+                        console.log(m)
+                    }
+                })
+            }
+        });
+    })
+</script>
+</body>
+</html>

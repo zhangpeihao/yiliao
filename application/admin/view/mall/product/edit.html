@@ -1,0 +1,211 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Cid')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-cid" data-rule="required" data-field="name" data-source="mall/category/index" class="form-control selectpage" name="row[cid]" type="text" value="{$row.cid}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Title')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-title" data-rule="required" class="form-control" name="row[title]" type="text" value="{$row.title}">
+        </div>
+    </div>
+<!--    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Summary')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-summary" data-rule="required" class="form-control" name="row[summary]" type="text" value="{$row.summary}">
+        </div>
+    </div>-->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Logo')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-logo" class="form-control" size="50" name="row[logo]" type="text" value="{$row.logo}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-logo" class="btn btn-danger plupload" data-input-id="c-logo" data-mimetype="logo/gif,logo/jpeg,logo/png,logo/jpg,logo/bmp" data-multiple="false" data-preview-id="p-logo"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-logo" class="btn btn-primary fachoose" data-input-id="c-logo" data-mimetype="logo/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-logo"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-logo"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Pics')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-pics" class="form-control" size="50" name="row[pics]" type="text" value="{$row.pics}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-pics" class="btn btn-danger plupload" data-input-id="c-pics" data-mimetype="pics/gif,pics/jpeg,pics/png,pics/jpg,pics/bmp" data-multiple="true" data-preview-id="p-pics"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-pics" class="btn btn-primary fachoose" data-input-id="c-pics" data-mimetype="pics/*" data-multiple="true"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-pics"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-pics"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Price')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-price" data-rule="required" class="form-control" step="0.01" name="row[price]" type="number" value="{$row.price}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Post_fee')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-post_fee" class="form-control" step="0.01" name="row[post_fee]" type="number" value="{$row.post_fee}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Content')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-content" data-rule="required" class="form-control editor" rows="15" name="row[content]" cols="50">{$row.content}</textarea>
+            <label class="label label-primary">注意：从外部拷贝的网页，请通过顶栏“格式”--“清除格式”，保证移动端正常预览</label>
+        </div>
+    </div>
+    <!--<div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Attr_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-attr_id" data-rule="required" data-source="attr/index" class="form-control selectpage" name="row[attr_id]" type="text" value="{$row.attr_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Extra_attr')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-extra_attr" class="form-control" name="row[extra_attr]" type="text" value="{$row.extra_attr}">
+        </div>
+    </div>-->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Address')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-address" class="form-control" name="row[address]" type="text" value="{$row.address}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">折扣:</label>
+        <div class="radio">
+            <label for="row1"><input id="row1" name="row[level_discount]" type="radio" value="1" {eq name="row.level_discount" value="1"}checked{/eq}/>会员折扣</label>
+            <label for="row2"><input id="row2" name="row[level_discount]" type="radio" value="0" {eq name="row.level_discount" value="0"}checked{/eq}/> 不允许会员折扣</label>
+        </div>
+    </div>
+    <!--<div class="form-group">-->
+        <!--<label class="control-label col-xs-12 col-sm-2">{:__('Origin_price')}:</label>-->
+        <!--<div class="col-xs-12 col-sm-8">-->
+            <!--<input id="c-origin_price" class="form-control" step="0.01" name="row[origin_price]" type="number" value="{$row.origin_price}">-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Store')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-store" class="form-control" name="row[store]" min="0" type="number" value="{$row.store}">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">设置自提地点:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea rows="8" class="form-control" name="row[self_accept]">{$row.self_accept}</textarea>
+            <label class="label label-primary">备注：多个请用“回车”分隔</label>
+        </div>
+    </div>
+   <!-- <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Sale_num')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-sale_num" class="form-control" name="row[sale_num]" type="number" value="{$row.sale_num}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Limit')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-limit" class="form-control" name="row[limit]" type="number" value="{$row.limit}">
+        </div>
+    </div>-->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Transfer')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-transfer" class="form-control" name="row[transfer]" type="text" value="{$row.transfer}">
+        </div>
+    </div>
+    <!--<div class="form-group">-->
+        <!--<label class="control-label col-xs-12 col-sm-2">{:__('Sale_total')}:</label>-->
+        <!--<div class="col-xs-12 col-sm-8">-->
+            <!--<input id="c-sale_total" class="form-control" name="row[sale_total]" type="number" value="{$row.sale_total}">-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Begin_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-begin_time" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[begin_time]" type="text" value="{$row.begin_time|datetime}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('End_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-end_time" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[end_time]" type="text" value="{$row.end_time|datetime}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Is_recommend')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-is_recommend" class="form-control selectpicker" name="row[is_recommend]">
+                {foreach name="isRecommendList" item="vo"}
+                    <option value="{$key}" {in name="key" value="$row.is_recommend"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            {foreach name="statusList" item="vo"}
+            <label for="row[status]-{$key}"><input id="row[status]-{$key}" name="row[status]" type="radio" value="{$key}" {in name="key" value="$row.status"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Sort')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-sort" class="form-control" name="row[sort]" type="number" value="{$row.sort}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Remark')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-remark" class="form-control" name="row[remark]" type="text" value="{$row.remark}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Kefu')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-kefu" class="form-control" name="row[kefu]" type="text" value="{$row.kefu}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Ctime')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-ctime" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[ctime]" type="text" value="{$row.ctime|datetime}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Utime')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-utime" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[utime]" type="text" value="{$row.utime|datetime}">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

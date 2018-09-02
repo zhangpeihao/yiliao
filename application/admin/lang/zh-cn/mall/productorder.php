@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'Id'  =>  '序号',
+    'Uid'  =>  '用户',
+    'Pid'  =>  '商品',
+    'Price'  =>  '价格',
+    'Menu'  =>  '套餐id',
+    'Fee'  =>  '总费用',
+    'Total'  =>  '总价',
+    'Money'  =>  '已支付金额',
+    'Credit'  =>  '使用积分数',
+    'Credit_money'  =>  '积分抵扣金额',
+    'Pay_type'  =>  '支付方式',
+    'Num'  =>  '购买数量',
+    'Post_type'  =>  '物流方式',
+    'Post_num'  =>  '快递单号',
+    'Out_trade_no'  =>  '订单号',
+    'Tmp_paysn'  =>  '统一支付标识',
+    'User_coupon_id'  =>  '用户的优惠券',
+    'User_duihuan_code'  =>  '用户兑换码',
+    'Share_code'  =>  '分销码',
+    'Address'  =>  '收货地址',
+    'Form_id'  =>  '预支付订单id',
+    'Openid'  =>  '微信id',
+    'Extra_attr'  =>  '额外信息',
+    'Status'  =>  '订单状态',
+    'Remark'  =>  '备注',
+    'From'  =>  '订单来源',
+    'Ctime'  =>  '下单时间',
+    'Utime'  =>  '更新时间',
+    'Attr'  =>'规格'
+];

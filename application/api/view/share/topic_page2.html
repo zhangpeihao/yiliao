@@ -1,0 +1,970 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{$data['title']}</title>
+    <link rel="stylesheet" href="https://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css" />
+    <link href="https://cdn.bootcss.com/video.js/5.19.0/alt/video-js-cdn.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/video.js/5.19.0/alt/video.novtt.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.js"></script>
+    <script type="text/javascript">
+        ! function () {
+            function e(e) {
+                return this.config = e, this
+            }
+            e.prototype = {
+                reset: function () {
+                    var e = Math.min(document.documentElement.clientWidth, 750) / 750 * 100;
+                    document.documentElement.style.fontSize = e + "px";
+                    var t = parseFloat(window.getComputedStyle(document.documentElement).fontSize),
+                        n = e / t;
+                    1 != n && (document.documentElement.style.fontSize = e * n + "px")
+                }
+            }, window.Adapter = new e, window.Adapter.reset(), window.onload = function () {
+                window.Adapter.reset()
+            }, window.onresize = function () {
+                window.Adapter.reset()
+            }
+        }();
+    </script>
+</head>
+<style>
+    .nomore{
+        display: none
+    }
+
+    .clickmore{
+        display: none;
+    }
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+    }
+
+    #fullPlayer{
+        width:100vw;
+
+    }
+    #fullPlayer_html5_api{
+        position: absolute;
+        z-index: 1;
+        margin: 0;
+        padding: 0;
+        object-fit: fill;
+    }
+    .video_page {
+        height: 100%;
+        width: 100%;
+
+        position: relative;
+    }
+
+    .fullPlayer-dimensions {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .video-js .vjs-big-play-button {
+        width: 2.2em;
+        height: 2.2em;
+        line-height: 2.2em;
+        left: 50%;
+        bottom: 50%;
+        margin-left: -1.1em;
+        margin-top: -1.1em;
+        background-color: rgba(0, 0, 0, 0.5);
+        border: 0;
+        font-size: 2em;
+    }
+
+    video {
+        position: relative;
+    }
+
+    .video_act {
+        position: absolute;
+        left: 0.24rem;
+        bottom: 1.6rem;
+        z-index: 999;
+    }
+
+    .userInfo {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: center;
+        height: 0.72rem;
+        line-height: 0.72rem;
+        position: relative;
+    }
+
+    .userInfo span {
+        color: #fff;
+    }
+
+
+
+    .commontTip {
+        line-height: 1rem;
+        height: 1rem;
+        font-size: 0.28rem;
+        color: #fff;
+    }
+
+    .talkBar {
+        height: 0.64rem;
+        /* line-height: 0.64rem; */
+
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        width: calc(100vw - 0.48rem);
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .share {
+        /* width: 1rem; */
+        height: 0.64rem;
+        /* line-height: 0.64rem; */
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        /* padding-left: 12px */
+    }
+
+    .share img {
+        width: 0.52rem;
+        height: 0.52rem;
+    }
+
+    .input {
+        position: relative;
+        width: calc(100vw - 1.72rem);
+        height: 0.64rem;
+        line-height: 0.64rem;
+    }
+
+    .input input {
+        height: 0.64rem;
+        line-height: 0.64rem;
+        outline: none;
+        border-radius: 0.32rem;
+        width: calc(100vw - 2rem);
+        border: none;
+        padding-left: 0.68rem;
+        background: rgba(255, 255, 255, 0.4)
+    }
+
+    .input img {
+        position: absolute;
+        left: 0.2rem;
+        width: 0.44rem;
+        height: 0.44rem;
+        top: 0.1rem;
+    }
+
+    input::-webkit-input-placeholder {
+        color: #fff !important;
+    }
+
+    .IIV::-webkit-media-controls-play-button,
+    .IIV::-webkit-media-controls-start-playback-button {
+        opacity: 0;
+        pointer-events: none;
+        width: 0.1rem;
+    }
+
+    .btn {
+        width: 1rem;
+        height: 1rem;
+        position: absolute;
+        left: 50%;
+        z-index: 9999;
+        top: 50%;
+        margin-left: -0.5rem;
+        margin-top: -0.5rem;
+    }
+
+    .hidePlay {
+        display: none;
+    }
+    .banner-top {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        z-index: 100;
+        width: 100%;
+        height: 1.4rem;
+        background-color: #0e0b17;
+        background-image: none;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+    }
+    .banner-top.transparent {
+        background-color: rgba(14,11,23,.6);
+        color: black;
+    }
+    .banner-top .user-wrap {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        height: 100%;
+        -webkit-align-items: center;
+        padding-left: 0.2rem;
+    }
+
+    .banner-top .user-wrap .avator {
+        width: 1rem;
+        height: 1rem;
+        -webkit-background-size: contain;
+        margin-right: 0.32rem;
+    }
+    .banner-top .info-wrap {
+        /* margin-left: 0.2rem; */
+        color: #fff;
+    }
+    .banner-top .info-wrap .name-wrap {
+        font-size: 0.32rem;
+        line-height: 0.4rem;
+        width: 2.4rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #face15;
+    }
+    .banner-top .info-wrap .txt-wrap {
+        font-size:0.28rem;
+        line-height: 0.4rem;
+        margin-top: 0.2rem;
+    }
+    .banner-btn {
+        width: 2.0rem;
+        height: 0.6rem;
+        line-height: 0.6rem;
+        border-radius: 0.12rem;
+        background: -webkit-linear-gradient(top,#fe2e57,#f41d6a);
+        font-size: 0.3rem;
+        color: #fff;
+        margin-right: 0.2rem;
+        text-align: center;
+    }
+
+
+
+    .inputBg{
+        position: absolute;
+        width:100vw;
+        height: calc(100vh - 2.62rem);
+        top: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 99999;
+    }
+    .alertInput{
+        background: #efefef;
+        z-index: 99999;
+        padding: 0.24rem;
+        position: absolute;
+        bottom: 0;
+        width:100vw;
+        box-sizing:border-box;
+    }
+    .alertInput textarea{
+        background: #fff;
+        width: 100%;
+        height:1.4rem;
+        padding: 0.1rem;
+        box-sizing: border-box;
+        border: none;
+    }
+
+
+    .alertInput button{
+        background: red;
+        padding: 0;
+        margin: 0;
+        line-height: 0.5rem;
+        width: 1.2rem;
+        height: 0.5rem;
+        font-size: 0.28rem;
+        color: #fff;
+        float: right;
+        margin-top: 0.24rem;
+    }
+
+    .talk_alert{
+        height: 80vh;
+        background: #fff;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        z-index: 9999;
+        overflow-y: scroll;
+    }
+
+    .nomore{
+        height:0.8rem;
+        color:#a5a5a5;
+        line-height:0.8rem;
+        text-align: center;
+        font-size: 0.28rem;
+        background: #fff;
+        clear: both;
+        overflow: hidden;
+    }
+
+    .clickmore{
+        height:0.8rem;color:#5a5a5a;line-height:0.8rem;
+        text-align: center;
+        font-size: 0.28rem;
+        background: #fff;
+        clear: both;
+        overflow: hidden;
+    }
+
+    .total{
+        width: 3rem;
+        font-size: 0.3rem;
+        color: #5a5a5a;
+    }
+
+
+    .comment_top{
+        height:1rem;
+        line-height:1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #d8d8d8;
+        padding: 0 0.28rem;
+        background: #fff;
+    }
+    .comment_top img{
+        height:0.36rem;
+        width:0.36rem;
+    }
+
+    .box_item {
+        padding-bottom: 0.28rem;
+        background: #fff;
+        padding: 0 0.28rem;
+        clear: both;
+    }
+
+    .box_item_cont {
+        padding-left: 0.82rem;
+        width:90%;
+        overflow: hidden;
+    }
+
+    .box_item_cont .cont {
+        line-height: 0.48rem;
+        font-size: 0.28rem;
+        color: #5a5a5a;
+        width: 100%;
+        /* background: pink;  */
+        white-space: normal;
+    }
+
+    .cont_time {
+        font-size: 0.24rem;
+        color: #a5a5a5;
+        height:0.5rem;
+        line-height:0.5rem;
+        float:left;
+        margin-right: 0.16rem;
+        z-index: 99999999
+    }
+    .cont_reply{
+        float:left;
+        font-size: 0.26rem;
+        color: #5a5a5a;
+        height:0.5rem;
+        line-height:0.5rem;
+        width: 0.84rem;
+        border-radius: 0.25rem;
+        background: #efefef;
+        text-align: center
+    }
+    .user_info {
+        height: 0.6rem;
+        line-height: 0.6rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 0.2rem 0;
+        margin-bottom: 0.1rem;
+    }
+
+    .user_info .avatar {
+        height: 0.6rem!important;
+        width: 0.6rem;
+        line-height: 0.6rem!important;
+        border-radius: 0.3rem;
+        margin-right: 0.12rem;
+    }
+
+    .user_info .user_infoP {
+        color: #363e9b;
+        font-size: 0.24rem;
+    }
+
+    .comment_bd{
+
+        background: #fff
+    }
+
+    .hide{
+        display: none;
+    }
+
+
+
+    .successTip{
+        position: fixed;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0.2rem;
+        left: 50%;
+        margin-left:-1rem;
+        top: 50%;
+        margin-top: -1rem;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+    }
+
+    .successTip img{
+        width: 0.64rem;
+        height: 0.64rem;
+    }
+
+    .successTip p{
+        font-size: 0.28rem;
+        color: #fff;
+        height: 0.8rem;
+        line-height: 0.8rem;
+    }
+
+    .userInfoLeft{
+        height: 0.72rem;
+        line-height: 0.72rem;
+    }
+    .userInfoLeft img{
+        width: 0.72rem;
+        height: 0.72rem;
+        border-radius: 0.36rem;
+        margin-right: 0.12rem;
+        float:left;
+    }
+
+    .userInfoLeft span{
+        display: inline-block;
+        float: left;
+    }
+
+
+    .userinfoRight{
+        position: absolute;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        top: -0.2rem;
+        height: 1.12rem
+    }
+    .userinfoRight p{
+        height:0.4rem;
+        line-height: 0.4rem;
+        font-size: 0.28rem;
+        color: #fff;
+        text-align: center;
+    }
+
+    .userinfoRight img{
+        vertical-align: bottom;
+        height: 0.56rem!important;
+        width: 0.56rem!important;
+    }
+
+    .share{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 1.12rem;
+        position: absolute;
+        top:-0.24rem;
+        right:0
+    }
+
+    .share img{
+        width: 0.56rem;
+        height: 0.56rem;
+        vertical-align: bottom;
+    }
+    .share p{
+        color: #fff;
+        font-size: 0.28rem;
+    }
+
+</style>
+
+<body>
+<div class="video_page">
+    <video id="fullPlayer" style="height:100vh;" poster="{$data['cover']}" controlslist="nodownload" playsinline x5-video-player-type="h5" class="video-js vjs-big-play-centered"
+           preload="auto" controls data-setup='{"controls": false, "autoplay": false, "preload": "auto"}'>
+        <source src="{$data['video']}" type="video/mp4"></source>
+
+    </video>
+
+    <img src="https://music.588net.com/assets/api/images/play.png" class="btn">
+    <div class="video_act">
+        <div class="userInfo">
+            <div class="userInfoLeft">
+                <img src="{$data['user']['avatar']}">
+                <span>{$data['user']['username']}</span>
+            </div>
+            <div class="userinfoRight">
+                {if condition="$data['is_admire'] eq 1"}
+                <img src="https://music.588net.com/assets/api/images/zaned.png" class="zan">
+                {else}
+                <img src="https://music.588net.com/assets/api/images/zan.png" class="zan">
+                {/if}
+                <p class="zanVal">{$data['likecount']}</p>
+            </div>
+
+
+
+        </div>
+        <p class="commontTip">{$data['title']}</p>
+        <div class="talkBar">
+            <div class="input">
+                <input type="text" placeholder="我说几句" name="inputframe" value="">
+                <img src="https://music.588net.com/assets/api/images/write.png">
+            </div>
+            <div class="share">
+                <img src="https://music.588net.com/assets/api/images/comment.png" class="comment">
+                <p class="commentVal">{$data['pcounts']}</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 弹出输入框 BG -->
+    <div class='inputBg'></div>
+    <div class='alertInput'>
+        <div style='background:#fff'>
+            <textarea placeholder='请写下你的评论' id="commentBd" value='' bindinput='inpuComment'></textarea>
+        </div>
+        <button type='primary' id='sendComment'>发送</button>
+        <button class='hideInput' type='warning' style="margin-right:0.3rem;background:#d8d8d8;color:#5a5a5a;">取消</button>
+    </div>
+    <!-- 弹出输入框 END -->
+
+
+
+
+    <!-- 弹出评论BG -->
+    <div class='talk_alert'>
+        <div class='comment_top'>
+            <div class='total' style='width:3rem'></div>
+            <img class='close' src='https://music.588net.com/assets/api/images/close.png'/>
+        </div>
+
+
+        <div class='comment_bd'>
+            <div class="bdCont">
+                <!-- <div class="box_item">
+                        <div class="user_info">
+                          <img class='avatar' src='./images/300.jpg'/>
+                          <div class="user_infoP">丧心病狂的李大爷</div>
+                        </div>
+                        <div class="box_item_cont">
+                          <div class="cont">来呀，快活呀，反正有，大把时光</div>
+                          <div class="cont_time">昨天梦里</div>
+                          <div class="cont_reply reply" onclick="reply('34')">回复</div>
+                        </div>
+                </div> -->
+            </div>
+
+
+            <div class='nomore'>(⑉꒦ິ^꒦ິ⑉)暂无更多评论</div>
+            <div class='clickmore' onclick='clickmore()'>点击加载更多</div>
+
+        </div>
+    </div>
+
+
+
+    <div id="bannerTop" class="banner-top transparent">
+        <div class="user-wrap">
+            <div class="avator" style="background-image:url('/assets/api/images/icon.png')"></div>
+            <div class="info-wrap">
+                <div class="name-wrap"> 乐鸟音乐</div>
+                <div class="txt-wrap">邀您一起，玩转音乐的乐趣</div>
+            </div>
+        </div>
+        <div class="banner-btn">立即下载</div>
+    </div>
+</div>
+
+<div class="successTip">
+    <img src="https://music.588net.com/assets/api/images/success.png">
+    <p>操作成功</p>
+</div>
+
+<script src="https://music.588net.com/assets/api/js/iphone-inline-video.min.js"></script>
+<script>
+    var token="{$token}";
+    //初始化 隐藏弹出部分
+    $('.inputBg').hide();
+    $('.alertInput').hide();
+    $('.talk_alert').hide();
+    $('.successTip').hide();
+
+    var commentVal=$('#commentBd').val();//输入框值
+    var baseUrl='https://music.588net.com';
+    var page=1;
+
+    var pid="{$pid}";
+
+    $(".banner-btn").click(function () {
+        window.location.href='/api/share/down';
+        return false;
+    });
+
+    //点击input框弹出  显示输入框 及背景
+    $('.input').click(function(e){
+        e.stopPropagation();
+        $('.inputBg').show();
+        $('.alertInput').show();
+        indexReply=true;
+        talkReply=false;
+        commentid='';
+    });
+
+    //点击评论回复 弹出输入框及背景
+    function reply(bid){
+        $('.inputBg').show();
+        $('.alertInput').show();
+        indexReply=false;
+        talkReply=true;
+        commentid=bid;
+    }
+
+
+    //点击背景 输入框消失
+    $('.inputBg').click(function(){
+        $(this).hide();
+        $('.alertInput').hide();
+    });
+
+    function getCommentList(){
+        $.ajax({
+            url:baseUrl+'/api/topic_post_comment/get_list',
+            type:'get',
+            headers:{token:token},
+            //headers:{"token":token,"Content-Type":"text/plain;charset=UTF-8"},
+            data:{
+                pid:pid,
+                page:page,
+                page_size:4
+            },
+            success:function(res){
+                var html='';
+                console.log(res.data);
+                var total=parseInt(res.data.total);
+                var data=res.data.data;
+                //$('.bdCont').empty();
+                $.each(data,function(commentIndex, comment){
+                    //console.log(comment);
+                    html += '<div class="box_item"><div class="user_info">';
+                    html +='<img  src="'+comment.user.avatar+ '" class="avatar"/>';
+                    html +='<div class="user_infoP">'+comment.user.username+'</div></div>';
+                    html +='<div class="box_item_cont">';
+                    html +='<div class="cont">'+comment.content+'</div>';
+                    html +='<div class="cont_time">'+comment.ctime+'</div>';
+                    html +='<div class="cont_reply reply" onclick="reply('+comment.id+')">回复</div>';
+                    html +='</div></div>';
+                });
+
+                var sumMomment=''+total+''+'条评论';
+                var sum=''+total+'';
+
+                $('.bdCont').append(html);
+                $('.total').text(sumMomment);
+                $('.commentVal').text(sum);
+
+
+                if(data.length==0||data==''||total<4){
+                    //  $('.comment_bd').append(nomore)
+                    $('.nomore').show();
+                    $('.clickmore').hide();
+                }else{
+                    // $('.comment_bd').append(more)
+                    $('.nomore').hide();
+                    $('.clickmore').show();
+                }
+            }
+        })
+    }
+
+    getCommentList();
+
+    //点击获取更多
+    function clickmore(){
+        page++;
+        getCommentList();
+    }
+
+
+    // 首页评论弹出输入框 与评论回复弹出框共用
+
+    //取消评论 隐藏评论框及背景
+    $('.hideInput').click(function(){
+        $('.inputBg').hide();
+        $('.alertInput').hide();
+
+    });
+
+    $('#sendComment').click(function(){
+        var val=$('#commentBd').val();
+        console.log(indexReply);
+        console.log(talkReply);
+        console.log(commentid);
+        if (token==''){
+            if (confirm('更多精彩内容请下载APP')){
+                window.location.href='/api/share/down';
+            }else{
+                return false;
+            }
+        }
+
+        if(val==''||val==undefined){
+            alert('评论不能为空');
+            return false;
+        }else{
+            if(indexReply){
+                $.ajax({
+                    url:baseUrl+'/api/topic_post_comment/add_comment',
+                    type:'POST',
+                    headers:{"token":token},
+                    data:{
+                        pid:pid,
+                        content:val
+                    },
+                    success:function(res){
+                        if(res.code==200||res.code==1){
+                            $('.successTip').show();
+                            //getCommentList();
+                            $('.inputBg').hide();
+                            $('.alertInput').hide();
+                            $('#commentBd').val('');
+
+                            setTimeout(function(){
+                                $('.successTip').hide();
+                            },2500)
+
+                        }else{
+                            alert(res.data.msg)
+                        }
+                    }
+                })
+            }
+
+            if(talkReply){
+
+                if(commentid!=''&&commentid!=undefined){
+                    $.ajax({
+                        url:baseUrl+'/api/topic_post_comment/add_comment',
+                        type:'POST',
+                        headers:{"token":token},
+                        data:{
+                            pid:pid,
+                            bid:commentid,
+                            content:val
+                        },
+                        success:function(res){
+                            if(res.code==200||res.code==1){
+                                $('.successTip').show();
+                                //getCommentList();
+                                $('.inputBg').hide();
+                                $('.alertInput').hide();
+                                $('#commentBd').val('');
+                                commentid='';
+                                setTimeout(function(){
+                                    $('.successTip').hide();
+                                },2500)
+                            }else{
+                                alert(res.data.msg)
+
+                            }
+
+                        }
+                    })
+                }
+
+            }
+        }
+
+    });
+
+    //  <!-- 弹出评论结束 -->
+    //点击弹出评论列表
+    $('.comment').click(function(e){
+        $('.bdCont').empty();
+        e.stopPropagation();
+        e.cancelBubble = true;
+        $('.talk_alert').show();
+        getCommentList();
+    });
+
+    //关闭显示弹出评论列表
+    $('.close').click(function(){
+        $('.talk_alert').hide();
+    });
+    //点赞
+    $('.zan').click(function(e){
+        e.stopPropagation();
+        if (token==''){
+            if (confirm('更多精彩内容请下载APP')){
+                window.location.href='/api/share/down';
+            }
+            return false;
+        }else{
+            $.ajax({
+                url:baseUrl+'/api/topic_post/add_admire',
+                type:'POST',
+                headers:{token:token},
+                //headers:{"token":token,"Content-Type":"text/plain;charset=UTF-8"},
+                data:{
+                    pid:pid
+                },
+                success:function(res){
+                    if(res.code==200||res.code==1){
+                        var likecount=parseInt($(".zanVal").text());
+                        $('.successTip').show();
+                        if(res.msg=='点赞成功'){
+                            $('.zan').attr('src','/assets/api/images/zaned.png')
+                            $(".zanVal").text(likecount+1);
+                        }else{
+                            $('.zan').attr('src','/assets/api/images/zan.png')
+                            $(".zanVal").text(likecount-1);
+                        }
+
+                        setTimeout(function(){
+                            $('.successTip').hide();
+                        },2500)
+                    }else{
+                        alert(res.msg);
+                    }
+
+                }
+            })
+        }
+    });
+    //分享
+    $('.share').click(function(){
+        alert('暂不支持分享')
+    });
+</script>
+
+<script>
+    var options = {};
+    var start = false;
+
+
+    var player = videojs('fullPlayer', options, function onPlayerReady() {
+        videojs.log('Your player is ready!');
+        this.pause();
+
+        this.on('play', function (e) {
+            console.log('开始/恢复播放');
+            start = true;
+            e.stopPropagation();
+        });
+
+        this.on('pause', function (e) {
+            console.log('暂停播放');
+            start = false;
+            e.stopPropagation();
+        });
+
+        this.on('ended', function () {
+
+            console.log('结束播放');
+            //结束后重新点击播放
+            $('.btn').toggleClass("hidePlay");
+        });
+
+        var that = this;
+
+        //点击视口 播放和暂停
+        $('body').on('touchend', '#fullPlayer', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.cancelBubble = true;
+
+            // $('.btn').toggleClass("hidePlay");
+            if (start == true) {
+                that.pause();
+                $('.btn').show();
+            } else {
+                that.play();
+                $('.btn').hide();
+            }
+        })
+
+        $('.btn').click(function(e){
+                e.stopPropagation();
+                
+                if (start) {
+                    that.pause();
+                    $('.btn').show();
+                } else {
+                    that.play();
+                    $('.btn').hide();
+                }
+        })
+
+    });
+
+    //ios全屏bug设置
+    var video = $('#fullPlayer').get(0);
+    enableInlineVideo(video);
+
+    var bfscrolltop = document.body.scrollTop; //获取软键盘唤起前浏览器滚动部分的高度
+    $("input.inputframe").focus(function () { //在这里‘input.inputframe’是我的底部输入栏的输入框，当它获取焦点时触发事件
+        interval = setInterval(function () { //设置一个计时器，时间设置与软键盘弹出所需时间相近
+            document.body.scrollTop = document.body.scrollHeight; //获取焦点后将浏览器内所有内容高度赋给浏览器滚动部分高度
+        }, 100)
+    }).blur(function () { //设定输入框失去焦点时的事件
+        clearInterval(interval); //清除计时器
+        document.body.scrollTop = bfscrolltop;
+        //将软键盘唤起前的浏览器滚动部分高度重新赋给改变后的高度
+    });
+
+</script>
+</body>
+
+</html>

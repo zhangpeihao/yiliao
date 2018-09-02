@@ -1,0 +1,40 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label for="c-date" class="control-label col-xs-12 col-sm-2">{:__('Date')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-date" class="form-control datetimepicker" data-date-format="YYYY-MM-DD" data-use-current="true" name="row[date]" type="text" value="{$row.date}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-contract_money" class="control-label col-xs-12 col-sm-2">{:__('Contract_money')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-contract_money" class="form-control" step="0.01" name="row[contract_money]" type="number" value="{$row.contract_money}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-continue_money" class="control-label col-xs-12 col-sm-2">{:__('Continue_money')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-continue_money" class="form-control" step="0.01" name="row[continue_money]" type="number" value="{$row.continue_money}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-refund_money" class="control-label col-xs-12 col-sm-2">{:__('Refund_money')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-refund_money" class="form-control" name="row[refund_money]" type="number" value="{$row.refund_money}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-creator" class="control-label col-xs-12 col-sm-2">{:__('Creator')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-creator" class="form-control" name="row[creator]" type="number" value="{$row.creator}">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

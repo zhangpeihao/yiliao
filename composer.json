@@ -1,0 +1,43 @@
+{
+    "name": "karsonzhang/fastadmin",
+    "description": "the fastest admin framework",
+    "type": "project",
+    "keywords": [
+        "fastadmin",
+        "thinkphp"
+    ],
+    "homepage": "http://www.fastadmin.net/",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Karson",
+            "email": "karsonzhang@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "topthink/framework": "~5.0.14",
+        "endroid/qr-code": "^1.9",
+        "topthink/think-captcha": "^1.0",
+        "mtdowling/cron-expression": "^1.2",
+        "phpmailer/phpmailer": "^5.2",
+        "karsonzhang/fastadmin-addons": "~1.1.4",
+        "overtrue/pinyin": "~3.0",
+        "topthink/think-mongo": "1.*",
+        "topthink/think-queue": "^2.0",
+        "monolog/monolog": "^1.23",
+        "elasticsearch/elasticsearch": "^6.0",
+        "johnlui/aliyun-oss": "^2.2",
+        "mk-j/php_xlsxwriter": "^0.37.0",
+        "topthink/think-worker": "1.0.*",
+        "topthink/think-swoole": "^2.0",
+        "overtrue/wechat": "^4.0",
+        "topthink/think-testing": "~1.0"
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "require-dev": {
+        "eaglewu/swoole-ide-helper": "dev-master"
+    }
+}

@@ -1,0 +1,76 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Uid')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-uid" class="form-control selectpage" data-source="user/user/index" data-field="username" data-primary-key="id" name="row[uid]" type="text" value="{$row.uid}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Agency_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-agency_id" data-rule="" data-source="agency/agency/index" class="form-control selectpage" name="row[agency_id]" type="text" value="{$row.agency_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Power_type')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-power_type" class="form-control selectpicker" name="row[power_type]">
+                {foreach name="powerTypeList" item="vo"}
+                    <option value="{$key}" {in name="key" value="$row.power_type"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Deviceserial')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-deviceSerial" class="form-control selectpage" data-source="camera/camera/index" data-field="display_deviceSerial" data-primary-key="deviceSerial" name="row[deviceSerial]" type="text" value="{$row.deviceSerial}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Creator')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-creator" class="form-control" name="row[creator]" type="number" value="{$row.creator}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Updator')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-updator" class="form-control" name="row[updator]" type="number" value="{$row.updator}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            {foreach name="statusList" item="vo"}
+            <label for="row[status]-{$key}"><input id="row[status]-{$key}" name="row[status]" type="radio" value="{$key}" {in name="key" value="$row.status"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Ctime')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-ctime" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[ctime]" type="text" value="{$row.ctime|datetime}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Utime')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-utime" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[utime]" type="text" value="{$row.utime|datetime}">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

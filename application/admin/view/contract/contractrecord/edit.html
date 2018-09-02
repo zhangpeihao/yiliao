@@ -1,0 +1,118 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label for="c-is_old" class="control-label col-xs-12 col-sm-2">{:__('Is_old')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-is_old" class="form-control selectpicker" name="row[is_old]">
+                {foreach name="isOldList" item="vo"}
+                    <option value="{$key}" {in name="key" value="$row.is_old"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-type" class="control-label col-xs-12 col-sm-2">{:__('Type')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-type" class="form-control selectpicker" name="row[type]">
+                {foreach name="typeList" item="vo"}
+                    <option value="{$key}" {in name="key" value="$row.type"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-sno" class="control-label col-xs-12 col-sm-2">{:__('Sno')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-sno" class="form-control" name="row[sno]" type="text" value="{$row.sno}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-student_id" class="control-label col-xs-12 col-sm-2">{:__('Student_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-student_id" data-rule="required" data-source="student/index" class="form-control selectpage" name="row[student_id]" type="text" value="{$row.student_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-startdate" class="control-label col-xs-12 col-sm-2">{:__('Startdate')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-startdate" class="form-control datetimepicker" data-date-format="YYYY-MM-DD" data-use-current="true" name="row[startdate]" type="text" value="{$row.startdate}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-enddate" class="control-label col-xs-12 col-sm-2">{:__('Enddate')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-enddate" class="form-control datetimepicker" data-date-format="YYYY-MM-DD" data-use-current="true" name="row[enddate]" type="text" value="{$row.enddate}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-lesson_id" class="control-label col-xs-12 col-sm-2">{:__('Lesson_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-lesson_id" data-rule="required" data-source="lesson/index" class="form-control selectpage" name="row[lesson_id]" type="text" value="{$row.lesson_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-lesson_count" class="control-label col-xs-12 col-sm-2">{:__('Lesson_count')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-lesson_count" class="form-control" step="0.1" name="row[lesson_count]" type="number" value="{$row.lesson_count}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-price" class="control-label col-xs-12 col-sm-2">{:__('Price')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-price" class="form-control" step="0.01" name="row[price]" type="number" value="{$row.price}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-other_price" class="control-label col-xs-12 col-sm-2">{:__('Other_price')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-other_price" class="form-control" step="0.01" name="row[other_price]" type="number" value="{$row.other_price}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-lesson_money" class="control-label col-xs-12 col-sm-2">{:__('Lesson_money')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-lesson_money" class="form-control" step="0.1" name="row[lesson_money]" type="number" value="{$row.lesson_money}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-total_fee" class="control-label col-xs-12 col-sm-2">{:__('Total_fee')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-total_fee" class="form-control" step="0.01" name="row[total_fee]" type="number" value="{$row.total_fee}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-remark" class="control-label col-xs-12 col-sm-2">{:__('Remark')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-remark" class="form-control" name="row[remark]" type="text" value="{$row.remark}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-status" class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            {foreach name="statusList" item="vo"}
+            <label for="row[status]-{$key}"><input id="row[status]-{$key}" name="row[status]" type="radio" value="{$key}" {in name="key" value="$row.status"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-creator" class="control-label col-xs-12 col-sm-2">{:__('Creator')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-creator" class="form-control" name="row[creator]" type="number" value="{$row.creator}">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

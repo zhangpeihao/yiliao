@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>邀请好友</title>
+    <script>
+        ! function () {
+            function e(e) {
+                return this.config = e, this
+            }
+
+            e.prototype = {
+                reset: function () {
+                    var e = Math.min(document.documentElement.clientWidth, 750) / 750 * 100;
+                    document.documentElement.style.fontSize = e + "px";
+                    var t = parseFloat(window.getComputedStyle(document.documentElement).fontSize),
+                        n = e / t;
+                    1 != n && (document.documentElement.style.fontSize = e * n + "px")
+                }
+            }, window.Adapter = new e, window.Adapter.reset(), window.onload = function () {
+                window.Adapter.reset()
+            }, window.onresize = function () {
+                window.Adapter.reset()
+            }
+        }();
+        function app_share(type){
+            var ua = navigator.userAgent.toLowerCase();
+            var device;
+            var title="乐鸟音乐";
+            var desc="乐鸟音乐邀请您一起来体验";
+            var imgurl="{:config('img_domain')}/assets/api/images/leniao_logo.png";
+            var location="{$share_url}";
+            if (/iphone|ipad|ipod/.test(ua)) {
+                doshare(type,title,desc,imgurl,location);
+            } else{
+                appshare.doshare(type,title,desc,imgurl,location);
+            }
+        }
+    </script>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        body{
+            width:100%;
+            height:100%;
+        }
+        img{
+            border: none;
+            vertical-align: bottom;
+            width: 100%;
+            height: 100%;
+        }
+        .cont{
+            position: relative;
+        }
+        .btn{
+            position: absolute;
+            left: 1.1rem;
+            height: 1.08rem;
+            line-height: 1.08rem;
+            z-index: 99;
+            top: 10.08rem;
+            width: 5.32rem;
+            border-radius: 0.54rem;
+        }
+
+    </style>
+</head>
+<body>
+<div class="cont">
+    <img src="/assets/api/images/share_bg.png">
+    <p class="btn" onclick="app_share()"></p>
+</div>
+</body>
+</html>

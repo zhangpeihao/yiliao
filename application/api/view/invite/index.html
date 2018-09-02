@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    *{margin: 0;padding: 0}
+    body{background:#f8fbfd;padding: 0 15px}
+    .inviter{padding: 30px 15px 20px 15px;color:#333;font-size: 16px}
+    .invite_card{background: #fff;padding: 0 10px;box-shadow: 0 0px 2px 1px #f3f5f6;text-align: center;padding-bottom: 40px}
+    .invite_obj{font-size: 18px;color: #333;padding: 36px 0 14px 0px;}
+    .creater{margin-bottom: 38px;font-size:16px;color:#42c089;display: inline-block;padding: 0px 10px;height: 28px;line-height: 28px;border-radius: 15px;border: 1px solid #42c089}
+    .invite_tip{color: #333;font-size: 16px;padding: 0 5px;line-height: 24px;text-align: left;margin-bottom: 80px;}
+    .download{box-shadow: 0 3px 10px 2px #e4e4e4;width: 100%;height: 44px;line-height: 44px;color: #fff;background: linear-gradient(to right,#54c694,#40baad);padding: 0;border-radius: 4px}
+</style>
+<body>
+<div class="invite">
+    <p class="inviter">{$data['to_username']} 邀请您加入:</p>
+    <div class="invite_card">
+        <p class="invite_obj">远航音乐工作室</p>
+        <span class="creater">创建人 {$data['username']}</span>
+        <p class="invite_tip">您的同事邀请您一起使用远航音乐教务APP,轻松提升教务管理效率!下载远航音乐教务APP并由此链接打开即可加速快速加入.</p>
+        <div class="download">
+            立即下载
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

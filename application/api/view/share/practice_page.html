@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{$data['title']}</title>
+
+    <link href="https://cdn.bootcss.com/video.js/5.19.0/alt/video-js-cdn.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/api/css/mescroll.min.css">
+    <script src="https://cdn.bootcss.com/video.js/5.19.0/alt/video.novtt.min.js"></script>
+
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        -webkit-touch-callout:none;
+        -webkit-user-select:none;
+        -webkit-tap-highlight-color:transparent;
+    }
+    body{background-color: white}
+    ul{list-style-type: none}
+    a {text-decoration: none;color: #18B4FE;}
+    body {
+        background: #f5f5f5;
+    }
+
+    .video_top {
+        background: #fff;
+
+    }
+
+    .lesson_cont {
+        padding: 0 14px;
+        background: #fff;
+        margin-bottom: 10px;
+    }
+
+    .cont_tle {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .cont_tle p {
+        font-size: 15px;
+        color: #5a5a5a;
+    }
+
+    .cont_tle img {
+        width: 22px;
+        height: 22px;
+        margin-right: 6px;
+    }
+
+    .cont_desc {
+        font-size: 14px;
+        color: #5a5a5a;
+        line-height: 26px;
+
+    }
+
+    .video,
+    video {
+        height: 244px;
+        width: 100%;
+        background: black;
+    }
+
+    /* .video{
+        position: relative;
+
+    }
+    .vjs-big-play-button{
+        position: absolute;
+        left: 50%!important;
+        margin-left: -1.5em;
+        top: 50%!important;
+        margin-top: -0.75em;
+    } */
+
+    .my-player-dimensions {
+        width: 100%;
+        height: 244px;
+    }
+
+    .video_desc {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 14px;
+        margin-bottom: 10px;
+        background: #fff;
+
+    }
+
+    .video_desc p{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+
+    .video_desc p span:nth-of-type(1) {
+        font-size: 15px;
+        color: #5a5a5a
+    }
+
+    .video_desc p span:nth-of-type(2) {
+        font-size: 14px;
+        color: #a5a5a5;
+    }
+
+    .talk {
+        padding: 0 14px;
+        background: #fff;
+    }
+
+    .user_info {
+        height: 35px;
+        line-height: 35px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .user_info img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        margin-right: 6px;
+    }
+
+    .user_info p {
+        color: #363e9b;
+        font-size: 12px;
+    }
+
+    .box_item {
+        margin-bottom: 14px;
+    }
+
+    .box_item_cont {
+        padding-left: 41px;
+
+    }
+
+    .box_item_cont .cont {
+        line-height: 26px;
+        font-size: 14px;
+        color: #5a5a5a;
+    }
+
+    .cont_time {
+        font-size: 12px;
+        color: #a5a5a5;
+    }
+
+    .page_detail {
+        position: relative;
+    }
+
+    .video_top {
+        height: 244px;
+        width:100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .main {
+        position: absolute;
+        top: 244px;
+        height: calc(100vh - 244px);
+        overflow-y: scroll;
+        width: 100%;
+    }
+
+    .video-js .vjs-big-play-button {
+        width: 2.2em;
+        height: 2.2em;
+        line-height: 2.2em;
+        border-radius: 505;
+        left: 50%;
+        bottom: 50%;
+        margin-left: -1.1em;
+        margin-top: -1.1em;
+        background-color: rgba(0,0,0,0.5);
+        border: 0;
+        font-size: 2em;
+    }
+
+    video::-webkit-media-controls-enclosure {
+        overflow:hidden;
+    }
+    video::-webkit-media-controls-panel {
+        width: calc(100% + 30px);
+    }
+    .IIV::-webkit-media-controls-play-button,
+    .IIV::-webkit-media-controls-start-playback-button {
+        opacity: 0;
+        pointer-events: none;
+        width: 5px;
+    }
+</style>
+
+<body>
+<div class="page_detail">
+    <div class="video_top">
+        <div class="video">
+            <!-- <video controls src="./video/love.mp4" controlslist="nodownload"></video> -->
+            <video playsinline id="my-player" class="video-js vjs-big-play-centered" autoplay="false" controls preload="auto" poster="{$data['cover']}" data-setup='{}'>
+                <source src="{$data['video']}" -webkit-playsinline='true' type="video/mp4"></source>
+            </video>
+        </div>
+
+    </div>
+    <div class="main" id="mescroll">
+        <div class="video_desc">
+            <p>
+                <span>{$data['title']}</span>
+                <span>{$data['read_count']}次播放</span>
+            </p>
+        </div>
+        <div class="lesson_cont">
+            <div class="cont_item">
+                <div class="cont_tle">
+                    <img src='/assets/api/images/cont.png'>
+                    <p>练习内容</p>
+                </div>
+                <p class="cont_desc">{$data['content']}</p>
+            </div>
+            <div class="cont_item">
+                <div class="cont_tle">
+                    <img src='/assets/api/images/aim.png'>
+                    <p>练习目标</p>
+                </div>
+                <p class="cont_desc">{$data['target']}</p>
+            </div>
+        </div>
+        <div class="talk">
+            <div class="cont_tle">
+                <img src='/assets/api/images/talk.png'>
+                <p>提问与讨论</p>
+            </div>
+            <div class="comment_box">
+               <!-- {volist name="comment['data']" id="vo"}
+                <div class="box_item">
+                    <div class="user_info">
+                        <img src="{$vo['user']['avatar']}">
+                        <p>{$vo['user']['username']}</p>
+                    </div>
+                    <div class="box_item_cont">
+                        <p class="cont">{$vo['content']}</p>
+                        <p class="cont_time">{$vo['createtime']}</p>
+                    </div>
+                </div>
+                {/volist}-->
+            </div>
+            <!--展示上拉加载的数据列表-->
+            <ul id="dataList" class="data-list">
+                <!--<li>
+                    <img class="pd-img" src="../res/img/pd1.jpg"/>
+                    <p class="pd-name">商品标题商品标题商品标题商品标题商品标题商品</p>
+                    <p class="pd-price">200.00 元</p>
+                    <p class="pd-sold">已售50件</p>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="/assets/api/js/mescroll.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/assets/libs/iphone-inline-video/dist/iphone-inline-video.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.js"></script>
+<script>
+    var options = {};
+    var pid="{$pid}";
+    var player = videojs('my-player', options, function onPlayerReady() {
+        videojs.log('Your player is ready!');
+
+        // In this context, `this` is the player that was created by Video.js.
+        this.pause();
+
+        // How about an event listener?
+        this.on('ended', function () {
+            videojs.log('Awww...over so soon?!');
+        });
+
+    });
+    var mescroll = new MeScroll("mescroll", {
+        up: {
+            page:{size:10},//每次加载1条数据,模拟loadFull
+            loadFull: {
+                use: true, //列表数据过少,是否自动加载下一页,直到满屏或者无更多数据为止;默认false
+                delay: 500 //延时执行的毫秒数; 延时是为了保证列表数据或占位的图片都已初始化完成,且下拉刷新上拉加载中区域动画已执行完毕;
+            },
+            callback: getListData, //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
+            isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+            clearEmptyId: "dataList", //1.下拉刷新时会自动先清空此列表,再加入数据; 2.无任何数据时会在此列表自动提示空
+            toTop:{ //配置回到顶部按钮
+                src : "../res/img/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+                //offset : 1000
+            }
+        },
+        down:{
+            auto:false,
+            page:{num:1,size:10},
+            callback:getListData //下拉刷新的回调,别写成downCallback(),多了括号就自动执行方法了
+        }
+    });
+
+    /*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
+    function getListData(page){
+        //联网加载数据
+        getListDataFromNet(page.num, page.size, function(curPageData){
+            //联网成功的回调,隐藏下拉刷新和上拉加载的状态;
+            //mescroll会根据传的参数,自动判断列表如果无任何数据,则提示空;列表无下一页数据,则提示无更多数据;
+            //方法一(推荐): 后台接口有返回列表的总页数 totalPage
+            mescroll.endByPage(curPageData.data.length, curPageData.total); //必传参数(当前页的数据个数, 总页数)
+            //设置列表数据,因为配置了emptyClearId,第一页会清空dataList的数据,所以setListData应该写在最后;
+            setListData(curPageData.data);
+        }, function(){
+            //联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+            mescroll.endErr();
+        });
+    }
+
+    /*设置列表数据*/
+    function setListData(curPageData){
+        var listDom=document.getElementById("dataList");
+        for (var i = 0; i < curPageData.length; i++) {
+            var pd=curPageData[i];
+            console.log(pd);
+            var str='<div class="box_item">' +
+                '                    <div class="user_info">' +
+                '                        <img src="'+pd.user.avatar+'">\n' +
+                '                        <p>'+pd.user.username+'</p>\n' +
+                '                    </div>\n' +
+                '                    <div class="box_item_cont">\n' +
+                '                        <p class="cont">'+pd.content+'</p>\n' +
+                '                        <p class="cont_time">'+pd.createtime+'</p>\n' +
+                '                    </div>\n' +
+                '                </div>';
+
+            var liDom=document.createElement("li");
+            liDom.innerHTML=str;
+            listDom.appendChild(liDom);
+        }
+    }
+
+
+    /*联网加载列表数据
+     在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+     请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+     实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+     * */
+
+    function getListDataFromNet(pageNum,pageSize,successCallback,errorCallback) {
+        //延时一秒,模拟联网
+        setTimeout(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/api/practice_comment/get_list?page='+pageNum+'&page_size='+pageSize+'&pid='+pid,
+                dataType: 'json',
+                success: function(data){
+                    //模拟分页数据
+                    var edata=data['data'];
+                    var listData=[];
+                    console.log(edata);
+                   for (var i = (pageNum-1)*pageSize; i < pageNum*pageSize; i++) {
+                        if(i==edata.data.length) break;
+                        listData.push(edata.data[i]);
+                    }
+                    console.log(listData);
+                    // successCallback(listData);
+                   successCallback(edata);
+                },
+                error: errorCallback
+            });
+        },500)
+    }
+    var video = $('#my-player').get(0);
+    enableInlineVideo(video);
+</script>
+
+</body>
+
+</html>
